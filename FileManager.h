@@ -25,7 +25,7 @@ class FileManager {
   void createDirectory(const std::string& directoryPath);
 
   bool isValidIndex(const size_t i, const size_t flag);
-  std::string setDirectory(const size_t i, const size_t flag);
+  std::string setDirectory(const size_t i);
 
   std::string stepAhead(const size_t index);
   std::string stepBack(const std::string& directoryPath);

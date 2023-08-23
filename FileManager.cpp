@@ -111,12 +111,8 @@ std::string FileManager::stepAhead(const size_t index) {
   return (fileList[index - 1] + "/");
 }
 
-std::string FileManager::setDirectory(const size_t i, const size_t flag) {
-  if (flag == 0) {
-    return (driveList[i - 1].c_str());
-  } else {
-    return (fileList[i - 1].c_str());
-  }
+std::string FileManager::setDirectory(const size_t i) {
+  return (driveList[i - 1].c_str());
 }
 
 bool FileManager::isValidIndex(const size_t i, const size_t flag) {
