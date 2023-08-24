@@ -1,5 +1,14 @@
 #include "Menu.h"
 
+Menu* Menu::Instance() {
+  if (_instance == nullptr) {
+    _instance = new Menu();
+    return _instance;
+  } else {
+    return nullptr;
+  }
+}
+
 void Menu::introPage() {
   while (!fm.isValidIndex(i, 0)) {
     std::cout << "\033[2J\033[1;1H";
