@@ -82,7 +82,6 @@ void Menu::IstepAhead() {
               << "\033[0m" << std::endl;
     std::cin >> i;
   }
-  std::cout << fm.stepAhead(i) << std::endl;
   directoryPath += fm.stepAhead(i);
   i = 0;
   mainPage();
@@ -94,7 +93,6 @@ void Menu::IstepBack() {
     introPage();
   }
   directoryPath = fm.stepBack(directoryPath);
-  std::cout << directoryPath << std::endl;
   mainPage();
 }
 
@@ -108,7 +106,8 @@ void Menu::IcreateFile() {
   std::getline(std::cin, fileName);
   std::regex filenameRegex(R"([a-zA-Z0-9_-]+\.[a-zA-Z0-9]+)");
   if (std::regex_match(fileName, filenameRegex)) {
-    fm.createFile(directoryPath + fileName);
+    FileCreator fileCreator;
+    fm.performFileOperation(directoryPath + fileName, fileCreator, OperationType::CREATE_FILE);
     mainPage();
   } else {
     IcreateFile();
@@ -125,7 +124,8 @@ void Menu::IcreateDirectory() {
   std::getline(std::cin, directoryName);
   std::regex directorynameRegex(R"([a-zA-Z0-9_-]+)");
   if (std::regex_match(directoryName, directorynameRegex)) {
-    fm.createDirectory(directoryPath + directoryName);
+    DirectoryCreator dirCreator;
+    fm.performFileOperation(directoryPath + directoryName, dirCreator, OperationType::CREATE_DIRECTORY);
     mainPage();
   } else {
     IcreateDirectory();
@@ -149,7 +149,8 @@ void Menu::IdeleteFileDirectory(const size_t index) {
   if (index == 5) {
     std::regex nameRegex(R"([a-zA-Z0-9_-]+\.[a-zA-Z0-9]+)");
     if (std::regex_match(name, nameRegex)) {
-      fm.deleteFile(directoryPath + name);
+      FileDeleter fileDeleter;
+      fm.performFileOperation(directoryPath + name, fileDeleter, OperationType::DELETE_FILE);
       mainPage();
     } else {
       IdeleteFileDirectory(5);
@@ -157,7 +158,8 @@ void Menu::IdeleteFileDirectory(const size_t index) {
   } else {
     std::regex nameRegex(R"([a-zA-Z0-9_-]+)");
     if (std::regex_match(name, nameRegex)) {
-      fm.deleteDirectory(directoryPath + name);
+      DirectoryDeleter dirDeleter;
+      fm.performFileOperation(directoryPath + name, dirDeleter, OperationType::DELETE_DIRECTORY);
       mainPage();
     } else {
       IdeleteFileDirectory(6);
